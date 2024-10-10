@@ -30,7 +30,6 @@ async def create_response(city, user_id):
     cached_weather = cache.get(city)
     if cached_weather:
         await sync_to_async(WeatherRequest.objects.create)(user_id=user_id, command=city, response=cached_weather)
-        print('cached')
         return cached_weather
 
     weather = get_weather(city)
@@ -46,7 +45,6 @@ async def create_response(city, user_id):
 
     cache.set(city, response_text, timeout=1800)
 
-    await sync_to_async(WeatherRequest.objects.create)(user_id=user_id, command=city, response=cached_weather)
-    print('no cached')
+    await sync_to_async(WeatherRequest.objects.create)(user_id=user_id, command=city, response=response_text)
 
     return response_text
