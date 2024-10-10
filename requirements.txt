@@ -4,3 +4,5 @@ aiogram==3.13.1
 python-dotenv==1.0
 requests==2.31.0
 django-filter==24.3
+django-redis==5.4.0
+drf-spectacular==0.26.4

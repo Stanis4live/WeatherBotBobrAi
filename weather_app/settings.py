@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "drf_spectacular",
     "bot",
     "app",
 ]
@@ -57,6 +58,7 @@ TEMPLATES = [
 ]
 
 REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_RENDERER_CLASSES': [
@@ -113,3 +115,20 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 OPENWEATHER_API_KEY = os.getenv("OPENWEATHER_API_KEY")
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'WeatherBot API',
+    'DESCRIPTION': 'API documentation for the WeatherBot service',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+}
